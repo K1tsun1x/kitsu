@@ -18,3 +18,4 @@
 	+ [x] Retrieve and normalize the memory map
 	+ [ ] Locate the kernel file on disk and load it into memory
 	+ [ ] Retrieve information about CPUID availability
+	+ [ ] ...

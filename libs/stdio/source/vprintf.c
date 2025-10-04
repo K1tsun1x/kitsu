@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void vprintf(const char* format, va_list arg) {
+int vprintf(const char* format, va_list arg) {
 	char* p = (char*)&format[0];
 	char tmp_buffer[132];
 	bool plussign;
@@ -37,7 +37,10 @@ void vprintf(const char* format, va_list arg) {
 			
 			if (*p == '%') putchar('%');
 			else if (*p == 'c') putchar((char)va_arg(arg, long));
-			else if (*p == 's') puts(va_arg(arg, char*));
+			else if (*p == 's') {
+				tbuf = va_arg(arg, char*);
+				for (j = 0; tbuf[j]; j++) putchar(tbuf[j]);
+			}
 			else if (*p == 'd') {
 				num = true;
 				itoa((int)va_arg(arg, long), tmp_buffer, 10);
@@ -81,9 +84,15 @@ void vprintf(const char* format, va_list arg) {
 				}
 
 				if (litpfx) {
-					if (rdx == 16) puts("0x");
-					else if (rdx == 8) puts("0");
-					else if (rdx == 2) puts("0b");
+					if (rdx == 16) {
+						putchar('0');
+						putchar('x');
+					}
+					else if (rdx == 8) putchar('0');
+					else if (rdx == 2)  {
+						putchar('0');
+						putchar('b');
+					}
 				}
 				
 				nlen = strlen(tbuf);
@@ -91,10 +100,12 @@ void vprintf(const char* format, va_list arg) {
 					prec -= nlen;
 					for (j = 0; j < prec; ++j) putchar('0');
 				}
-				
-				puts(tbuf);
+
+				for (j = 0; tbuf[j]; j++) putchar(tbuf[j]);
 			}
 		}
 		else putchar(*p);
 	}
+
+	return 1;
 }

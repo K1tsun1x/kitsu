@@ -1,5 +1,6 @@
 extern void __int10_0e(char c);
 
-void putchar(char c) {
-	__int10_0e(c);
+int putchar(int c) {
+	__int10_0e((char)c);
+	return c;
 }

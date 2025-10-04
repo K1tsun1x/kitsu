@@ -16,25 +16,22 @@
 /**
  * @warning Must be implemented by the target environment
  */
-extern void putchar(char c);
+extern int putchar(int c);
 
 /**
  * @warning Requires function putchar() to be implemented
  */
-extern void vprintf(const char* format, va_list arg);
+extern int vprintf(const char* format, va_list arg);
 
 /**
  * @warning Requires function putchar() to be implemented
  */
-extern void printf(const char* format, ...);
+extern int printf(const char* format, ...);
 
 
 /**
  * @warning Requires function putchar() to be implemented
  */
-static inline void puts(const char* s) {
-	char* p = (char*)&s[0];
-	for (; *p;) putchar(*p++);
-}
+extern int puts(const char* s);
 
 #endif

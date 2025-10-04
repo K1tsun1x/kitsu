@@ -33,15 +33,6 @@ SECTIONS {
 
 	.rodata : {
 		*(.rodata)
-	}
-
-	. = ALIGN(480);
-
-	.PADDING : {
-		QUAD(0x20656e757374694b);
-		QUAD(0x732073656c696d73);
-		QUAD(0x6120796c74656577);
-		QUAD(0x333a20756f792074);
 		. = . + 0;
 	}
 

@@ -2,40 +2,40 @@ org 0x7c00
 bits 16
 
 %define MAIN_BOOTLOADER_DESTINATION			0x1000
-%define MAIN_BOOTLOADER_SECTOR_NUMBER		3
+%define MAIN_BOOTLOADER_SECTOR_NUMBER		2
 
 PRE_BOOTLOADER_BEGIN:
-BPB:
-	jmp short MAIN
-	nop
-	.OEM_ID:				db "KITSU   "
-	.BytesPerSector:		dw 512
-	.SectorsPerCluster:		db 1			; must be changed(?)
-	.ReservedSectors:		dw 32
-	.TotalFATs:				db 1			; must be changed
-	.MaxRootEntries:		dw 0			; must be changed
-	.NumberOfSectors:		dw 0			; must be changed
-	.MediaDescriptor:		db 0xf8			; must be changed
-	.SectorsPerFAT:			dw 0
-	.SectorsPerTrack:		dw 0
-	.HeadsPerCylinder:		dw 0
-	.HiddenSectors:			dd 0			; must be changed(?)
-	.TotalSectors:			dd 0			; must be changed
-EBPB:
-	.BigSectorsPerFAT:		dd 1			; must be changed
-	.Flags:					dw 0
-	.FSVersion:				dw 0
-	.RootDirectoryStart:	dd 2
-	.FSInfoSector:			dw 1
-	.BackupBootSector:		dw 0
-	.Reserved:				times 12 db 0
-	.DriveNumber:			db 0x80
-	.WinNTFlags:			db 0
-	.FATSignature:			db 0x29
-	.VolumeIDSerialNumber:	dd 0
-	.VolumeLabel:			db "Kitsu      "
-	.SystemID:				db "FAT32   "
-MAIN:
+; BPB:
+; 	jmp short MAIN
+; 	nop
+; 	.OEM_ID:				db "KITSU   "
+; 	.BytesPerSector:		dw 512
+; 	.SectorsPerCluster:		db 1			; must be changed(?)
+; 	.ReservedSectors:		dw 32
+; 	.TotalFATs:				db 1			; must be changed
+; 	.MaxRootEntries:		dw 0			; must be changed
+; 	.NumberOfSectors:		dw 0			; must be changed
+; 	.MediaDescriptor:		db 0xf8			; must be changed
+; 	.SectorsPerFAT:			dw 0
+; 	.SectorsPerTrack:		dw 0
+; 	.HeadsPerCylinder:		dw 0
+; 	.HiddenSectors:			dd 0			; must be changed(?)
+; 	.TotalSectors:			dd 0			; must be changed
+; EBPB:
+; 	.BigSectorsPerFAT:		dd 1			; must be changed
+; 	.Flags:					dw 0
+; 	.FSVersion:				dw 0
+; 	.RootDirectoryStart:	dd 2
+; 	.FSInfoSector:			dw 1
+; 	.BackupBootSector:		dw 0
+; 	.Reserved:				times 12 db 0
+; 	.DriveNumber:			db 0x80
+; 	.WinNTFlags:			db 0
+; 	.FATSignature:			db 0x29
+; 	.VolumeIDSerialNumber:	dd 0
+; 	.VolumeLabel:			db "Kitsu      "
+; 	.SystemID:				db "FAT32   "
+; MAIN:
 	jmp 0:LOAD_REGISTERS
 LOAD_REGISTERS:
 	mov ax, 0
@@ -128,12 +128,12 @@ MsgErrorFailedToLoadMainBootloader: db "Error: failed to load main bootloader!",
 times 510 - $ + $$ db 0
 dw 0xaa55
 PRE_BOOTLOADER_END:
-FS_INFO_BEGIN:
-	.LeadSignature:				dd 0x41615252
-	.Reserved1:					times 480 db 0
-	.AnotherSignature:			dd 0x61417272
-	.LastKnownFreeCluster:		dd -1
-	.AvailableClusters:			dd -1
-	.Reserved2:					times 12 db 0
-	.TrailSignature:			dd 0xaa550000
-FS_INFO_END:
+; FS_INFO_BEGIN:
+; 	.LeadSignature:				dd 0x41615252
+; 	.Reserved1:					times 480 db 0
+; 	.AnotherSignature:			dd 0x61417272
+; 	.LastKnownFreeCluster:		dd -1
+; 	.AvailableClusters:			dd -1
+; 	.Reserved2:					times 12 db 0
+; 	.TrailSignature:			dd 0xaa550000
+; FS_INFO_END:

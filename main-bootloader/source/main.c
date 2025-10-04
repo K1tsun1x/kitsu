@@ -43,52 +43,52 @@ extern void kitsu_loader_main(uint8_t drive) {
 		0, 1, (unsigned int)&__BEGIN__, (unsigned int)&__END__, (unsigned int)&__END__ - (unsigned int)&__BEGIN__
 	);
 	printf("Booted from drive %#.2x\r\n", drive);
-	puts("Getting drive info...");
+	printf("Getting drive info...");
 
-	if (drive_init(drive)) puts("[SUCCESS]\r\n");
+	if (drive_init(drive)) printf("[SUCCESS]\r\n");
 	else {
-		puts("[FAIL]");
+		printf("[FAIL]");
 		hlt();
 	}
 
-	puts("BIOS-reported geometry: ");
+	printf("BIOS-reported geometry: ");
 	printf("Cylinders=%u, Heads=%u, Sectors/Track=%u\r\n", drive_get_cylinders(), drive_get_heads(), drive_get_spt());
 
-	puts("Checking for presence of i8042 controller...");
+	printf("Checking for presence of i8042 controller...");
 	bool i8042isprsnt = i8042_is_present();
-	puts(i8042isprsnt ? "[DETECTED]\r\n" : "[NOT DETECTED]\r\n");
+	printf(i8042isprsnt ? "[DETECTED]\r\n" : "[NOT DETECTED]\r\n");
 
 	bool a20lnisenbld = cpu_a20_is_enabled();
-	puts("Checking A20 line status...");
-	if (a20lnisenbld) puts("[ENABLED]\r\n");
+	printf("Checking A20 line status...");
+	if (a20lnisenbld) printf("[ENABLED]\r\n");
 	else {
-		puts("[DISABLED]\r\n");
+		printf("[DISABLED]\r\n");
 		if (i8042isprsnt) {
-			puts("Trying to enable A20 line using i8042...");
+			printf("Trying to enable A20 line using i8042...");
 			i8042_enable_a20();
 			a20lnisenbld = cpu_a20_is_enabled();
-			if (a20lnisenbld) puts("[SUCCESS]\r\n");
-			else puts("[FAIL]\r\n");
+			if (a20lnisenbld) printf("[SUCCESS]\r\n");
+			else printf("[FAIL]\r\n");
 		}
 
 		if (!a20lnisenbld) {
-			puts("Trying to enable A20 line using fast gate...");
+			printf("Trying to enable A20 line using fast gate...");
 			(void)(fast_a20_enable_a20());
 			a20lnisenbld = cpu_a20_is_enabled();
-			if (a20lnisenbld) puts("[SUCCESS]\r\n");
-			else puts("[FAIL]\r\n");
+			if (a20lnisenbld) printf("[SUCCESS]\r\n");
+			else printf("[FAIL]\r\n");
 		}
 
 		if (!a20lnisenbld) hlt();
 	}
 
-	puts("Getting memory map (E820)...");
+	printf("Getting memory map (E820)...");
 	if (!e820_get_map(MEM_MAP, sizeof(MEM_MAP) / sizeof(MEM_MAP[0]), &MEM_MAP_LEN)) {
-		puts("[FAIL]\r\n");
+		printf("[FAIL]\r\n");
 		hlt();
 	}
 
-	puts("[SUCCESS]\r\n");
+	printf("[SUCCESS]\r\n");
 
 	memmap_sort(MEM_MAP, MEM_MAP_LEN);
 	memmap_remove_extra(MEM_MAP, MEM_MAP_LEN, MEM_MAP_EX, sizeof(MEM_MAP_EX) / sizeof(MEM_MAP_EX[0]), &MEM_MAP_LEN);
@@ -112,6 +112,6 @@ extern void kitsu_loader_main(uint8_t drive) {
 		}
 	}
 
-	puts("Done.\r\n");
+	printf("Done.\r\n");
 	hlt();
 }

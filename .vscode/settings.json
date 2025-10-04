@@ -1,0 +1,8 @@
+{
+	"files.associations": {
+		"errno.h": "c",
+		"stdio.h": "c",
+		"main.h": "c",
+		"mbr.h": "c"
+	}
+}
